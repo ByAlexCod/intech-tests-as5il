@@ -11,7 +11,7 @@ class CarotteTest
     @Test
     void testSeReproduire() {
         IRacePure carotteInstance = new Carotte();
-        HashMap<String, Integer> panier = new HashMap();
+        HashMap<String, Integer> panier = new HashMap<>();
         panier.put("Carotte", 1);
         carotteInstance.seReproduire(panier);
 

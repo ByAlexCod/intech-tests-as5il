@@ -12,10 +12,11 @@ class VegetalTest
 {
     @Test
     void testGrandir() {
-        Vegetal vegetalInstance = new Ail();
+        Vegetal vegetalInstance = new VegetalTestClass();
         Etat etatBase = vegetalInstance.getEtat();
         vegetalInstance.grandir();
 
         assertEquals(etatBase.ordinal() + 1, vegetalInstance.getEtat().ordinal());
+
     }
 }
