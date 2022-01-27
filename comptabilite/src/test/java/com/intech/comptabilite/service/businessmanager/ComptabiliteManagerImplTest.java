@@ -32,6 +32,12 @@ public class ComptabiliteManagerImplTest {
         cal.setTime(ecritureComptable.getDate());
         return ecritureComptable.getJournal().getCode() + "-" + cal.get(Calendar.YEAR) + "/00001";
     }
+
+    String getReference(EcritureComptable ecritureComptable, String seq) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(ecritureComptable.getDate());
+        return ecritureComptable.getJournal().getCode() + "-" + cal.get(Calendar.YEAR) + "/" + seq;
+    }
     @Test
     public void checkEcritureComptableUnit() throws Exception {
         EcritureComptable vEcritureComptable;
@@ -209,7 +215,7 @@ public class ComptabiliteManagerImplTest {
 
         manager.addReference(vEcritureComptable);
 
-        Assertions.assertEquals(vEcritureComptable.getReference(), getReference(vEcritureComptable));
+        Assertions.assertEquals(getReference(vEcritureComptable, "00002"), vEcritureComptable.getReference());
     }
 
 }
