@@ -14,7 +14,8 @@ class BetteraveTest
         AbstractMap.SimpleEntry<Integer, Integer>  result = betteraveInstance.seDupliquer(5, 5);
 
         assertEquals(Etat.GRAINE, betteraveInstance.getEtat());
-        assertTrue(result.getKey() <= 5);
-        assertTrue(result.getValue() <= 5);
+        assertTrue(result.getKey() < 5);
+        assertTrue(result.getValue() < 5);
     }
+
 }

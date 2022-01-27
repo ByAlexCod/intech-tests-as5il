@@ -15,12 +15,14 @@ import jardin.flore.IOgm;
 import jardin.flore.IRacePure;
 import jardin.flore.Tomate;
 import jardin.flore.Vegetal;
+import lombok.Getter;
 
 public class Jardin {
 
 	private int longueur; 
 	private int largeur;
 	private HashMap<String, Integer> panier;
+	@Getter
 	private Emplacement emplacement[][];
 	
 	public HashMap<String, Integer> getPanier() {
