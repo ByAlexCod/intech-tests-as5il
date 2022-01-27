@@ -1,6 +1,7 @@
 package com.intech.comptabilite.service.entityservice;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -83,8 +84,13 @@ public class EcritureComptableService {
 	 * @return boolean
 	 */
 	public boolean isEquilibree(EcritureComptable ecriture) {
-		boolean vRetour = this.getTotalDebit(ecriture).equals(getTotalCredit(ecriture));
-		return vRetour;
+		BigDecimal totalCredit = this.getTotalCredit(ecriture);
+		totalCredit = totalCredit.setScale(2, RoundingMode.CEILING);
+
+		BigDecimal totalDebit = this.getTotalDebit(ecriture);
+		totalDebit = totalDebit.setScale(2, RoundingMode.CEILING);
+
+		return totalDebit.equals(totalCredit);
 	}
 
 }
