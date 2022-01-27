@@ -2,6 +2,7 @@ package com.intech.comptabilite.service.businessmanager;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -70,7 +71,10 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
      */
     // TODO à implémenter et à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable)
+            throws NotFoundException
+    {
+
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
@@ -138,6 +142,16 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
         }
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(pEcritureComptable.getDate());
+
+        if(!pEcritureComptable.getReference().split("-")[1].split("/")[0].equals(String.valueOf(calendar.get(Calendar.YEAR)))) {
+            throw new FunctionalException("La référence doit contenir la date de l'écriture");
+        }
+
+        if(!pEcritureComptable.getReference().split("-")[0].equals(pEcritureComptable.getJournal().getCode())) {
+            throw new FunctionalException("La référence doit contenir le code du journal");
+        }
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
     }
 
