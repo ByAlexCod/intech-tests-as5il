@@ -19,12 +19,16 @@ import lombok.Getter;
 
 public class Jardin {
 
-	private int longueur; 
+	private int longueur;
 	private int largeur;
 	private HashMap<String, Integer> panier;
 	@Getter
 	private Emplacement emplacement[][];
 	
+	public Emplacement[][] getEmplacement() {
+		return emplacement;
+	}
+
 	public HashMap<String, Integer> getPanier() {
 		return panier;
 	}
@@ -37,11 +41,7 @@ public class Jardin {
 	}
 
 	public void ajouterPanier(String nom, Integer quantite) {
-		if (this.panier.get(nom) == null) {
-			this.panier.put(nom, quantite);
-		} else {
-			this.panier.put(nom, this.panier.get(nom) + quantite);
-		}
+		this.panier.put(nom, this.panier.getOrDefault(nom, 0) + quantite);
 	}
 
 	@Override
@@ -61,12 +61,12 @@ public class Jardin {
 			}
 			sb.append("\n");
 		}
-		
+
 		sb.append("\nEt notre panier contient :");
-		
+
 		TreeSet<String> sortedSet = new TreeSet<String>();
 		sortedSet.addAll(panier.keySet());
-		
+
 		Iterator<String> it = sortedSet.iterator();
 		while (it.hasNext()) {
 			String nom = it.next();
@@ -95,27 +95,27 @@ public class Jardin {
 
 		switch (choiceVegetal) {
 		case 1:
-			if (this.panier.get("Ail") > 0) {
+			if (this.panier.get("Ail") != null && this.panier.get("Ail") > 0) {
 				this.emplacement[x][y] = new Emplacement(new Ail());
 				this.panier.put("Ail", this.panier.get("Ail") - 1);
 			}
 			break;
 		case 2:
-			if (this.panier.get("Betterave") > 0) {
+			if (this.panier.get("Betterave") != null && this.panier.get("Betterave") > 0) {
 				this.emplacement[x][y] = new Emplacement(new Betterave());
 				this.panier.put("Betterave", this.panier.get("Betterave") - 1);
 				break;
 			}
 		case 3:
-			if (this.panier.get("Carotte") > 0) {
+			if (this.panier.get("Carotte") != null && this.panier.get("Carotte") > 0) {
 				this.emplacement[x][y] = new Emplacement(new Carotte());
 				this.panier.put("Carotte", this.panier.get("Carotte") - 1);
 				break;
 			}
 		case 4:
-			if (this.panier.get("Tomate") > 0) {
+			if (this.panier.get("Tomate") != null && this.panier.get("Tomate") > 0) {
 				this.emplacement[x][y] = new Emplacement(new Tomate());
-				this.panier.put("Tomtate", this.panier.get("Tomate") - 1);
+				this.panier.put("Tomate", this.panier.get("Tomate") - 1);
 				break;
 			}
 		}
@@ -137,9 +137,12 @@ public class Jardin {
 	}
 
 	public void recolter() {
+		
+		//Emplacement[][] duplicate = emplacement.clone();
+		
 		for (int x = 0; x < this.longueur; x++) {
 			for (int y = 0; y < this.largeur; y++) {
-				
+
 				Emplacement e = emplacement[x][y];
 				if (e != null && e.getVeg().getEtat() == Etat.FLEUR) {
 					emplacement[x][y] = null;
