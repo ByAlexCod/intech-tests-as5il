@@ -13,15 +13,14 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @SpringBootTest
 public class EcritureComptableServiceTest {
 
-    @MockBean EcritureComptableRepository ecritureComptableRepository;
+    @SpyBean EcritureComptableRepository ecritureComptableRepository;
 
 	
 	@Autowired
@@ -101,7 +100,7 @@ public class EcritureComptableServiceTest {
     }
 
     @Test
-    void testGetByRef() throws NotFoundException
+    void testUnitGetByRef() throws NotFoundException
     {
 
         Mockito.when(ecritureComptableRepository.getByReference("BQ-2016/00001"))
@@ -121,52 +120,55 @@ public class EcritureComptableServiceTest {
 
         }
 
-        //        String REFERENCE = "BQ-2016/00001";
-        //        CompteComptable compteComptable = saveAndGetRandomCompteComptable();
-        //
-        //
-        //        JournalComptable journalComptable;
-        //        Integer vEcritureId = (new Random()).nextInt(1000);
-        //        EcritureComptable vEcriture;
-        //        journalComptable = new JournalComptable();
-        //        journalComptable.setCode("ABCD");
-        //        journalComptable.setLibelle("Journal de test");
-        //        vEcriture = new EcritureComptable();
-        //
-        //        vEcriture.setId(vEcritureId);
-        //        vEcriture.setLibelle("Equilibrée");
-        //        vEcriture.setDate(new Date());
-        //        vEcriture.setJournal(journalComptable);
-        //
-        //
-        //        LigneEcritureComptable ligneEcritureComptableA = this.createLigne(1, "200.50", null);
-        //        ligneEcritureComptableA.setLigneId(new LigneId(vEcritureId, (new Random()).nextInt(1000)));
-        //        ligneEcritureComptableA.setCompteComptable(compteComptable);
-        //
-        //        LigneEcritureComptable ligneEcritureComptableB = this.createLigne(2, "100.50", "33");
-        //        ligneEcritureComptableB.setLigneId(new LigneId(vEcritureId, (new Random()).nextInt(1000)));
-        //        ligneEcritureComptableB.setCompteComptable(compteComptable);
-        //
-        //
-        //        vEcriture.getListLigneEcriture().add(ligneEcritureComptableA);
-        //        vEcriture.getListLigneEcriture().add(ligneEcritureComptableB);
-        //
-        //
-        //        vEcriture.setReference(REFERENCE);
-        //
-        //
-        //        String referenceGiven = vEcriture.getReference();
-        //        Assertions.assertNotNull(referenceGiven);
-        //        Assertions.assertEquals(REFERENCE, referenceGiven);
-        //
-        //        ecritureComptableService.insertEcritureComptable(vEcriture);
-        //        EcritureComptable foundEcriture = ecritureComptableService.getEcritureComptableByRef(REFERENCE);
-        //        Assertions.assertEquals(REFERENCE, foundEcriture.getReference());
+
     }
+
 
     @Test
-    void updateEcritureComptableTest() {
+    void testIntegGetByRef() throws NotFoundException
+    {
+        String REFERENCE = "BQ-2016/00001";
+        CompteComptable compteComptable = saveAndGetRandomCompteComptable();
 
+
+        JournalComptable journalComptable;
+        Integer vEcritureId = (new Random()).nextInt(1000);
+        EcritureComptable vEcriture;
+        journalComptable = new JournalComptable();
+        journalComptable.setCode("ABCD");
+        journalComptable.setLibelle("Journal de test");
+        vEcriture = new EcritureComptable();
+
+        vEcriture.setId(vEcritureId);
+        vEcriture.setLibelle("Equilibrée");
+        vEcriture.setDate(new Date());
+        vEcriture.setJournal(journalComptable);
+
+
+        LigneEcritureComptable ligneEcritureComptableA = this.createLigne(1, "200.50", null);
+        ligneEcritureComptableA.setLigneId(new LigneId(vEcritureId, (new Random()).nextInt(1000)));
+        ligneEcritureComptableA.setCompteComptable(compteComptable);
+
+        LigneEcritureComptable ligneEcritureComptableB = this.createLigne(2, "100.50", "33");
+        ligneEcritureComptableB.setLigneId(new LigneId(vEcritureId, (new Random()).nextInt(1000)));
+        ligneEcritureComptableB.setCompteComptable(compteComptable);
+
+
+        vEcriture.getListLigneEcriture().add(ligneEcritureComptableA);
+        vEcriture.getListLigneEcriture().add(ligneEcritureComptableB);
+
+
+        vEcriture.setReference(REFERENCE);
+
+
+        String referenceGiven = vEcriture.getReference();
+        Assertions.assertNotNull(referenceGiven);
+        Assertions.assertEquals(REFERENCE, referenceGiven);
+
+        ecritureComptableService.insertEcritureComptable(vEcriture);
+        EcritureComptable foundEcriture = ecritureComptableService.getEcritureComptableByRef(REFERENCE);
+        Assertions.assertEquals(REFERENCE, foundEcriture.getReference());
     }
+
 
 }
