@@ -59,6 +59,8 @@ public class EcritureComptableService {
 				vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
 			}
 		}
+		vRetour = vRetour.setScale(2, RoundingMode.CEILING);
+
 		return vRetour;
 	}
 
@@ -75,6 +77,7 @@ public class EcritureComptableService {
 				vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
 			}
 		}
+		vRetour = vRetour.setScale(2, RoundingMode.CEILING);
 		return vRetour;
 	}
 
@@ -85,10 +88,8 @@ public class EcritureComptableService {
 	 */
 	public boolean isEquilibree(EcritureComptable ecriture) {
 		BigDecimal totalCredit = this.getTotalCredit(ecriture);
-		totalCredit = totalCredit.setScale(2, RoundingMode.CEILING);
 
 		BigDecimal totalDebit = this.getTotalDebit(ecriture);
-		totalDebit = totalDebit.setScale(2, RoundingMode.CEILING);
 
 		return totalDebit.equals(totalCredit);
 	}
