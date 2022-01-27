@@ -34,6 +34,8 @@ public class SequenceEcritureComptable {
     public Integer getAnnee() {
         return annee;
     }
+    public void setJournalCode(String journalCode) { this.journalCode = journalCode;}
+    public String getJournalCode() { return this.journalCode;}
     public void setAnnee(Integer pAnnee) {
         annee = pAnnee;
     }
